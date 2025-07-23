@@ -4,7 +4,7 @@ from sklearn.datasets import make_blobs
 from sklearn.model_selection import train_test_split
 
 class Perceptron:
-    def __init__(self, seed=0, input_size=2, learning_rate=0.01, epochs=100):
+    def __init__(self, seed=0, input_size=2, learning_rate=0.001, epochs=100):
         self.seed = seed
         self.learning_rate = learning_rate
         self.epochs = epochs
@@ -40,8 +40,9 @@ class Perceptron:
             for x, target in zip(X, y):
                 prediction = self.predict(x)
                 error = target - prediction
-                self.weights += self.learning_rate * error * x
-                self.bias += self.learning_rate * error
+                if(error != 0):
+                    self.weights += self.learning_rate * error * x
+                    self.bias += self.learning_rate * error
         ### END CODE HERE ###
 
 def generate_data(seed=0, samples=200, noise=1.5):
@@ -109,7 +110,7 @@ def main():
     X, y = generate_data(39)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    model = Perceptron(epochs=100)
+    model = Perceptron(epochs=10000)
     model.fit(X_train, y_train)
     predictions = model.predict(X_test)
     accuracy = np.mean(predictions == y_test)
