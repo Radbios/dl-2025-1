@@ -16,7 +16,7 @@ class Perceptron:
         ### START CODE HERE ###
         ### TODO: Initialize weights with small Gaussian noise using rng.normal
         self.weights = rng.normal(loc=0.0, scale=0.01, size=self.input_size)
-        self.bias = 0.0
+        self.bias = rng.normal(loc=0.0, scale=0.01)
         ### END CODE HERE ###
 
     def activation(self, x):
@@ -115,7 +115,7 @@ def main():
     accuracy = np.mean(predictions == y_test)
     print(f"Test Accuracy: {accuracy:.2f}")
 
-    # plot_decision_boundary(model, X, y)
+    plot_decision_boundary(model, X, y)
 
 if __name__ == "__main__":
 
