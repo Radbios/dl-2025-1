@@ -17,25 +17,34 @@ class Perceptron:
         rng = np.random.default_rng(self.seed)
         ### START CODE HERE ###
         ### TODO: Initialize weights with small Gaussian noise using rng.normal
-        pass
+        self.weights = rng.normal(loc=0.0, scale=0.01, size=self.input_size)
+        self.bias = rng.normal(loc=0.0, scale=0.01)
         ### END CODE HERE ###
 
     def activation(self, x):
         ### START CODE HERE ###
         ### TODO: Implement the step activation function
-        pass
+        return np.where(x >= 0, 1, -1)
         ### END CODE HERE ###
 
     def predict(self, X):
         ### START CODE HERE ###
         ### TODO: Add bias term, compute dot product with weights, apply activation
-        pass
+        return self.activation(
+            np.dot(X, self.weights) + self.bias
+        )
         ### END CODE HERE ###
 
     def fit(self, X, y):
         ### START CODE HERE ###
         ### TODO: Implement the perceptron learning algorithm
-        pass
+        for epoch in range(self.epochs):
+            for x, target in zip(X, y):
+                prediction = self.predict(x)
+                error = target - prediction
+                if(error != 0):
+                    self.weights += self.learning_rate * error * x
+                    self.bias += self.learning_rate * error
         ### END CODE HERE ###
 
 #%%
